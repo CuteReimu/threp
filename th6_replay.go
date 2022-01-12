@@ -2,7 +2,7 @@ package threp
 
 import (
 	"encoding/binary"
-	"errors"
+	"github.com/pkg/errors"
 	"io"
 	"math"
 )
@@ -46,7 +46,7 @@ func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
 		Date:    "20" + date[6:8] + "/" + date[:2] + "/" + date[3:5],
 		Player:  trimNull(name),
 		Char:    safeIndex([]string{"ReimuA", "ReimuB", "MarisaA", "MarisaB"}, char),
-		Score:   score,
+		Score:   int64(score),
 		Rank:    safeIndex([]string{"Easy", "Normal", "Hard", "Lunatic", "Extra"}, rank),
 		Version: "",
 		Drop:    drop,

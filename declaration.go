@@ -8,18 +8,17 @@ type OldRepInfo struct {
 	Rank    string
 	Version string
 	Drop    float32 // 处理落率（百分比）
+	Comment string
 }
 
 type TH8RepInfo struct {
-	Player   string
-	PlayTime string
-	Char     string
-	Score    int64
-	Level    string
-	Stage    string
-	Miss     int
-	Bomb     int
-	Drop     float32 // 处理落率（百分比）
-	Human    float32 // 人妖率（百分比）
-	Version  string
+	NewRepInfo
+	Miss  int
+	Bomb  int
+	Human float32 // 人妖率（百分比）
+}
+
+type NewRepInfo struct {
+	OldRepInfo
+	Stage string
 }

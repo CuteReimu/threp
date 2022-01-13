@@ -58,7 +58,7 @@ func DecodeTh8Replay(fin io.ReadSeeker) (*TH8RepInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	ret.PlayTime = getValue("プレイ時刻\t", string(line))
+	ret.Date = getValue("プレイ時刻\t", string(line))
 
 	// line3: キャラ名\t(char)\r\n
 	line, _, err = reader.ReadLine()
@@ -82,7 +82,7 @@ func DecodeTh8Replay(fin io.ReadSeeker) (*TH8RepInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	ret.Level = getValue("難易度\t\t", string(line))
+	ret.Rank = getValue("難易度\t\t", string(line))
 
 	// line6: 最終ステージ\t(stage)\r\n
 	line, _, err = reader.ReadLine()

@@ -1,6 +1,32 @@
 package threp
 
-import "strings"
+import (
+	"github.com/pkg/errors"
+	"io"
+	"strings"
+)
+
+func seek(reader io.Reader, offset int64) error {
+	if offset == 0 {
+		return nil
+	}
+	if r, ok := reader.(io.Seeker); ok {
+		_, err := r.Seek(offset, io.SeekCurrent)
+		return err
+	}
+	if offset < 0 {
+		return errors.Errorf("cannot seek negative offset: %d", offset)
+	}
+	buf := make([]byte, offset)
+	n, err := reader.Read(buf)
+	if err != nil {
+		return err
+	}
+	if int64(n) < offset {
+		return io.EOF
+	}
+	return nil
+}
 
 func trim(s string) string {
 	s = trimNull(s)

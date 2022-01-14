@@ -14,10 +14,10 @@ func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
 		return nil, err
 	}
 	if n < 0x30 {
-		return nil, errors.New("not a replay file")
+		return nil, errors.New("not a replay")
 	}
 	if string(dat[:4]) != "T6RP" {
-		return nil, errors.New("not a th06 replay file")
+		return nil, errors.New("not a th06 replay")
 	}
 	// Decryption
 	dat2 := make([]byte, 0, len(dat))
@@ -32,7 +32,7 @@ func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
 
 	// check
 	if dat2[0x06] > 0x04 || dat2[0x07] > 0x05 {
-		return nil, errors.New("decrypt th6 replay file failed")
+		return nil, errors.New("decrypt th6 replay failed")
 	}
 
 	// replay info

@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func DecodeTh8Replay(fin io.ReadSeeker) (*TH8RepInfo, error) {
+func DecodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 	buf := make([]byte, 4)
 	n, err := fin.Read(buf)
 	if err != nil {
@@ -20,7 +20,7 @@ func DecodeTh8Replay(fin io.ReadSeeker) (*TH8RepInfo, error) {
 	}
 	// replay format check
 	if n != 4 || string(buf) != "T8RP" {
-		return nil, errors.New("not a th08 replay file")
+		return nil, errors.New("not a th08 replay")
 	}
 
 	// read data size
@@ -39,7 +39,7 @@ func DecodeTh8Replay(fin io.ReadSeeker) (*TH8RepInfo, error) {
 	}
 
 	// move to fileinfo block.
-	_, err = fin.Seek(int64(binary.LittleEndian.Uint32(buf)-4), io.SeekCurrent)
+	err = seek(fin, int64(binary.LittleEndian.Uint32(buf)-4))
 	if err != nil {
 		return nil, err
 	}

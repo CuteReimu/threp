@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func DecodeNewReplay(fin io.ReadSeeker) (*NewRepInfo, error) {
+func DecodeNewReplay(fin io.Reader) (*NewRepInfo, error) {
 	buf := make([]byte, 4)
 	n, err := fin.Read(buf)
 	if err != nil {
@@ -17,20 +17,20 @@ func DecodeNewReplay(fin io.ReadSeeker) (*NewRepInfo, error) {
 	}
 	// replay format check
 	if n != 4 || buf[0] != 't' {
-		return nil, errors.New("not a replay file")
+		return nil, errors.New("not a replay")
 	}
 
 	game := string(buf[1:3])
 	if strings.Compare(game, "10") < 0 || strings.Compare(game, "18") > 0 {
-		return nil, errors.New("not a replay file")
+		return nil, errors.New("not a replay")
 	}
 	if game == "18" {
 		if buf[3] != 'r' && buf[3] != 't' {
-			return nil, errors.New("not a replay file")
+			return nil, errors.New("not a replay")
 		}
 	} else {
 		if buf[3] != 'r' {
-			return nil, errors.New("not a replay file")
+			return nil, errors.New("not a replay")
 		}
 	}
 
@@ -50,7 +50,7 @@ func DecodeNewReplay(fin io.ReadSeeker) (*NewRepInfo, error) {
 	}
 
 	// move to fileinfo block.
-	_, err = fin.Seek(int64(binary.LittleEndian.Uint32(buf)-4), io.SeekCurrent)
+	err = seek(fin, int64(binary.LittleEndian.Uint32(buf)-4))
 	if err != nil {
 		return nil, err
 	}

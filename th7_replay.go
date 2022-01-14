@@ -14,10 +14,10 @@ func DecodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 		return nil, err
 	}
 	if len(dat) <= 4 {
-		return nil, errors.New("not a replay file")
+		return nil, errors.New("not a replay")
 	}
 	if string(dat[:4]) != "T7RP" {
-		return nil, errors.New("not a th07 replay file")
+		return nil, errors.New("not a th07 replay")
 	}
 	dat2 := make([]byte, len(dat))
 	mask := dat[0x0d]

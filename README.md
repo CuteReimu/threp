@@ -1,6 +1,8 @@
 # threp
 
 ![](https://img.shields.io/github/languages/top/CuteReimu/threp "语言")
+[![](https://img.shields.io/github/workflow/status/CuteReimu/threp/Go)](https://github.com/CuteReimu/threp/actions/workflows/go.yml "代码分析")
+[![](https://img.shields.io/github/contributors/CuteReimu/threp)](https://github.com/CuteReimu/threp/graphs/contributors "贡献者")
 [![](https://img.shields.io/badge/License-BY--NC--SA%203.0-lightgrey)](https://github.com/CuteReimu/threp/blob/master/LICENSE "许可协议")
 
 解析东方Project的replay文件的Go语言版本

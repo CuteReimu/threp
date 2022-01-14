@@ -46,6 +46,7 @@ func DecodeTh8Replay(fin io.ReadSeeker) (*TH8RepInfo, error) {
 
 	reader := bufio.NewReader(transform.NewReader(fin, japanese.ShiftJIS.NewDecoder()))
 	ret := &TH8RepInfo{}
+	ret.Game = "8"
 	// line1: プレイヤー名\t(name)\r\n
 	line, _, err := reader.ReadLine()
 	if err != nil {

@@ -173,6 +173,7 @@ func DecodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 	score := int64(binary.LittleEndian.Uint32(dat2[0x6c:0x6c+4])) * 10
 	drop := math.Float32frombits(binary.LittleEndian.Uint32(dat2[0xcc : 0xcc+4]))
 	return &OldRepInfo{
+		Game:    "7",
 		Date:    date,
 		Player:  trimNull(name),
 		Char:    safeIndex([]string{"ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"}, char),

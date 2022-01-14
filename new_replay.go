@@ -9,15 +9,29 @@ import (
 	"strings"
 )
 
-func DecodeTh10Replay(fin io.ReadSeeker) (*NewRepInfo, error) {
+func DecodeNewReplay(fin io.ReadSeeker) (*NewRepInfo, error) {
 	buf := make([]byte, 4)
 	n, err := fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}
 	// replay format check
-	if n != 4 || string(buf) != "t10r" {
-		return nil, errors.New("not a th10 replay file")
+	if n != 4 || buf[0] != 't' {
+		return nil, errors.New("not a replay file")
+	}
+
+	game := string(buf[1:3])
+	if strings.Compare(game, "10") < 0 || strings.Compare(game, "18") > 0 {
+		return nil, errors.New("not a replay file")
+	}
+	if game == "18" {
+		if buf[3] != 'r' && buf[3] != 't' {
+			return nil, errors.New("not a replay file")
+		}
+	} else {
+		if buf[3] != 'r' {
+			return nil, errors.New("not a replay file")
+		}
 	}
 
 	// read data size
@@ -43,8 +57,9 @@ func DecodeTh10Replay(fin io.ReadSeeker) (*NewRepInfo, error) {
 
 	reader := bufio.NewReader(fin)
 	ret := &NewRepInfo{}
+	ret.Game = game
 	// retrieve replay info
-	// line1: USER????????東方風神録 リプレイファイル情報\r\n
+	// line1: USER????????
 	_, _, err = reader.ReadLine()
 	if err != nil {
 		return nil, err
@@ -70,31 +85,28 @@ func DecodeTh10Replay(fin io.ReadSeeker) (*NewRepInfo, error) {
 	}
 	ret.Date = "20" + getValue("Date ", string(line))
 
-	// char, rank and stage are only available in 1.00a or higher.
-	if strings.Compare(ret.Version, "1.00a") >= 0 {
-		// line5: Chara (char)\r\n
-		line, _, err = reader.ReadLine()
-		if err != nil {
-			return nil, err
-		}
-		ret.Char = getValue("Chara ", string(line))
+	// line5: Chara (char)\r\n
+	line, _, err = reader.ReadLine()
+	if err != nil {
+		return nil, err
+	}
+	ret.Char = getValue("Chara ", string(line))
 
-		// line6: ;Rank (rank)\r\n
-		line, _, err = reader.ReadLine()
-		if err != nil {
-			return nil, err
-		}
-		ret.Rank = getValue("Rank ", string(line))
+	// line6: ;Rank (rank)\r\n
+	line, _, err = reader.ReadLine()
+	if err != nil {
+		return nil, err
+	}
+	ret.Rank = getValue("Rank ", string(line))
 
-		// line7: Extra|Stage (stage)
-		line, _, err = reader.ReadLine()
-		if err != nil {
-			return nil, err
-		}
-		ret.Stage = getValue("Stage ", string(line))
-		if len(ret.Stage) == 0 {
-			ret.Stage = getValue("Extra ", string(line))
-		}
+	// line7: Extra|Stage (stage)
+	line, _, err = reader.ReadLine()
+	if err != nil {
+		return nil, err
+	}
+	ret.Stage = getValue("Stage ", string(line))
+	if len(ret.Stage) == 0 {
+		ret.Stage = getValue("Extra ", string(line))
 	}
 
 	// line8: Score (score)\r\n

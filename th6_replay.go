@@ -43,6 +43,7 @@ func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
 	score := binary.LittleEndian.Uint32(dat2[0x24 : 0x24+4])
 	drop := math.Float32frombits(binary.LittleEndian.Uint32(dat2[0x2c : 0x2c+4]))
 	return &OldRepInfo{
+		Game:    "6",
 		Date:    "20" + date[6:8] + "/" + date[:2] + "/" + date[3:5],
 		Player:  trimNull(name),
 		Char:    safeIndex([]string{"ReimuA", "ReimuB", "MarisaA", "MarisaB"}, char),

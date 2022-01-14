@@ -7,6 +7,35 @@
 
 这个仓库是在score.royalflare.net即将关站前夕，为纪念它而写的。现将该网站上开源的python解析replay文件的代码转化为Go语言版本。
 
+## 安装方法
+
+```bash
+go get github.com/CuteReimu/threp
+```
+
+## 使用方法
+
+```go
+package main
+
+import (
+    "github.com/CuteReimu/threp"
+    "os"
+)
+
+func main() {
+    f, _ := os.Open(`th12_ud0001.rpy`)
+    defer f.Close()
+    result, _ := threp.DecodeNewReplay(f)
+    println(result)
+}
+```
+
+## 函数说明
+
+- `DecodeTh6Replay`、`DecodeTh7Replay`、`DecodeTh8Replay`分别用来解析th6、th7、th8三作的rpy文件。
+- `DecodeNewReplay`用来解析th10-th18各整数作的rpy文件
+
 ## 进度
 
 - [x] 东方红魔乡
@@ -14,17 +43,17 @@
 - [x] 东方永夜抄
 - [ ] 东方文花帖
 - [x] 东方风神录
-- [ ] 东方地灵殿
-- [ ] 东方星莲船
+- [x] 东方地灵殿
+- [x] 东方星莲船
 - [ ] 东方文花帖DS
 - [ ] 妖精大战争
-- [ ] 东方神灵庙
-- [ ] 东方辉针城
-- [ ] 东方绀珠传
-- [ ] 东方天空璋
+- [x] 东方神灵庙
+- [x] 东方辉针城
+- [x] 东方绀珠传
+- [x] 东方天空璋
 - [ ] 秘封噩梦日记
-- [ ] 东方鬼形兽
-- [ ] 东方虹龙洞
+- [x] 东方鬼形兽
+- [x] 东方虹龙洞
 - [ ] 黄昏酒场
 
 ## 许可协议

@@ -1,6 +1,7 @@
 package threp
 
 type OldRepInfo struct {
+	Game    string
 	Date    string
 	Player  string
 	Char    string

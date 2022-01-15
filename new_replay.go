@@ -158,7 +158,7 @@ func decodeNewReplay(fin io.Reader, game string) (*NewRepInfo, error) {
 	n, _ = fin.Read(buf)
 	if n > 0 {
 		s := trim(string(buf))
-		if s[:4] == "USER" && len(s) >= 12 {
+		if len(s) >= 12 && s[:4] == "USER" {
 			// cut USER????????
 			ret.Comment = trim(s[12:])
 		}

@@ -13,24 +13,29 @@ import (
 )
 
 func DecodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
-	buf := make([]byte, 4)
-	n, err := fin.Read(buf)
+	dat := make([]byte, 4)
+	n, err := fin.Read(dat)
 	if err != nil {
 		return nil, err
 	}
-	// replay format check
-	if n != 4 || string(buf) != "T8RP" {
+	if n < 4 {
+		return nil, errors.New("not a replay")
+	}
+	if string(dat) != "T8RP" {
 		return nil, errors.New("not a th08 replay")
 	}
+	return decodeTh8Replay(fin)
+}
 
+func decodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 	// read data size
-	buf = make([]byte, 8)
-	_, err = fin.Read(buf)
+	buf := make([]byte, 8)
+	_, err := fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}
 	buf = buf[:4]
-	n, err = fin.Read(buf)
+	n, err := fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +51,7 @@ func DecodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 
 	reader := bufio.NewReader(transform.NewReader(fin, japanese.ShiftJIS.NewDecoder()))
 	ret := &TH8RepInfo{}
-	ret.Game = "8"
+	ret.game = "8"
 	// line1: プレイヤー名\t(name)\r\n
 	line, _, err := reader.ReadLine()
 	if err != nil {

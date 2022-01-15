@@ -19,37 +19,46 @@ func DecodeNewReplay(fin io.Reader) (*NewRepInfo, error) {
 	if n != 4 || buf[0] != 't' {
 		return nil, errors.New("not a replay")
 	}
-
-	var game string
-	switch string(buf) {
-	case "t95r":
-		game = "95"
-	case "t125":
-		game = "125"
-	case "128r":
-		game = "128"
-	case "t156":
-		game = "165"
-	case "al1r":
-		game = "ALCO"
-	default:
-		game = string(buf[1:3])
-		if strings.Compare(game, "10") < 0 || strings.Compare(game, "18") > 0 {
-			return nil, errors.New("not a replay")
-		}
-		if buf[3] != 'r' && (game != "18" || buf[3] != 't') {
-			return nil, errors.New("not a replay")
-		}
+	game := getNewReplayGame(string(buf))
+	if len(game) == 0 {
+		return nil, errors.New("not a replay")
 	}
+	return decodeNewReplay(fin, game)
+}
 
+func getNewReplayGame(magic string) string {
+	switch magic {
+	case "t95r":
+		return "95"
+	case "t125":
+		return "125"
+	case "128r":
+		return "128"
+	case "t156":
+		return "165"
+	case "al1r":
+		return "ALCO"
+	default:
+		game := magic[1:3]
+		if strings.Compare(game, "10") < 0 || strings.Compare(game, "18") > 0 {
+			return ""
+		}
+		if magic[3] != 'r' && (game != "18" || magic[3] != 't') {
+			return ""
+		}
+		return game
+	}
+}
+
+func decodeNewReplay(fin io.Reader, game string) (*NewRepInfo, error) {
 	// read data size
-	buf = make([]byte, 8)
-	_, err = fin.Read(buf)
+	buf := make([]byte, 8)
+	_, err := fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}
 	buf = buf[:4]
-	n, err = fin.Read(buf)
+	n, err := fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +74,7 @@ func DecodeNewReplay(fin io.Reader) (*NewRepInfo, error) {
 
 	reader := bufio.NewReader(fin)
 	ret := &NewRepInfo{}
-	ret.Game = game
+	ret.game = game
 	// retrieve replay info
 	// line1: USER????????
 	_, _, err = reader.ReadLine()

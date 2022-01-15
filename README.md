@@ -21,24 +21,24 @@ go get github.com/CuteReimu/threp
 package main
 
 import (
-    "github.com/CuteReimu/threp"
-    "os"
+	"fmt"
+	"github.com/CuteReimu/threp"
+	"os"
 )
 
 func main() {
-    f, _ := os.Open(`th12_ud0001.rpy`)
-    defer f.Close()
-    result, _ := threp.DecodeNewReplay(f)
-    println(result)
+	f, _ := os.Open(`th12_ud0001.rpy`)
+	defer f.Close()
+	result, _ := threp.DecodeNewReplay(f)
+	fmt.Println(result.String())
 }
 ```
-
-详细用法可见`example/main.go`
 
 ## 函数说明
 
 - `DecodeTh6Replay`、`DecodeTh7Replay`、`DecodeTh8Replay`分别用来解析th6、th7、th8三作的rpy文件。
 - `DecodeNewReplay`用来解析th95及以后各作的rpy文件
+- `DecodeReplay`用来解析任意一作的rpy文件，返回`RepInfo`接口
 
 ## 进度
 

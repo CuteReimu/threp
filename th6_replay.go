@@ -8,16 +8,28 @@ import (
 )
 
 func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
-	dat := make([]byte, 0x30)
+	dat := make([]byte, 4)
 	n, err := fin.Read(dat)
 	if err != nil {
 		return nil, err
 	}
-	if n < 0x30 {
+	if n < 4 {
 		return nil, errors.New("not a replay")
 	}
-	if string(dat[:4]) != "T6RP" {
+	if string(dat) != "T6RP" {
 		return nil, errors.New("not a th06 replay")
+	}
+	return decodeTh6Replay(fin)
+}
+
+func decodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
+	dat := make([]byte, 0x30)
+	n, err := fin.Read(dat[4:])
+	if n < 0x30-4 {
+		return nil, errors.New("not a replay")
+	}
+	if err != nil {
+		return nil, err
 	}
 	// Decryption
 	dat2 := make([]byte, 0, len(dat))
@@ -43,7 +55,7 @@ func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
 	score := binary.LittleEndian.Uint32(dat2[0x24 : 0x24+4])
 	drop := math.Float32frombits(binary.LittleEndian.Uint32(dat2[0x2c : 0x2c+4]))
 	return &OldRepInfo{
-		Game:    "6",
+		game:    "6",
 		Date:    "20" + date[6:8] + "/" + date[:2] + "/" + date[3:5],
 		Player:  trimNull(name),
 		Char:    safeIndex([]string{"ReimuA", "ReimuB", "MarisaA", "MarisaB"}, char),

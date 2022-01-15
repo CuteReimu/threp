@@ -9,16 +9,26 @@ import (
 )
 
 func DecodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
+	dat := make([]byte, 4)
+	n, err := fin.Read(dat)
+	if err != nil {
+		return nil, err
+	}
+	if n < 4 {
+		return nil, errors.New("not a replay")
+	}
+	if string(dat) != "T7RP" {
+		return nil, errors.New("not a th07 replay")
+	}
+	return decodeTh7Replay(fin)
+}
+
+func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 	dat, err := ioutil.ReadAll(fin)
 	if err != nil {
 		return nil, err
 	}
-	if len(dat) <= 4 {
-		return nil, errors.New("not a replay")
-	}
-	if string(dat[:4]) != "T7RP" {
-		return nil, errors.New("not a th07 replay")
-	}
+	dat = append([]byte("T7RP"), dat...)
 	dat2 := make([]byte, len(dat))
 	mask := dat[0x0d]
 	for i := 0; i < 0x10; i++ {
@@ -173,7 +183,7 @@ func DecodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 	score := int64(binary.LittleEndian.Uint32(dat2[0x6c:0x6c+4])) * 10
 	drop := math.Float32frombits(binary.LittleEndian.Uint32(dat2[0xcc : 0xcc+4]))
 	return &OldRepInfo{
-		Game:    "7",
+		game:    "7",
 		Date:    date,
 		Player:  trimNull(name),
 		Char:    safeIndex([]string{"ReimuA", "ReimuB", "MarisaA", "MarisaB", "SakuyaA", "SakuyaB"}, char),

@@ -1,10 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/CuteReimu/threp"
-	"io"
 	"log"
 	"os"
 	"strings"
@@ -30,40 +28,10 @@ func run() {
 		return
 	}
 	defer func() { _ = f.Close() }()
-	buf := make([]byte, 4)
-	n, err := f.Read(buf)
+	ret, err := threp.DecodeReplay(f)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	if n != 4 {
-		log.Println("not a replay")
-		return
-	}
-	_, err = f.Seek(0, io.SeekStart)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	var ret interface{}
-	switch string(buf) {
-	case "T6RP":
-		ret, err = threp.DecodeTh6Replay(f)
-	case "T7RP":
-		ret, err = threp.DecodeTh7Replay(f)
-	case "T8RP":
-		ret, err = threp.DecodeTh8Replay(f)
-	default:
-		ret, err = threp.DecodeNewReplay(f)
-	}
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	buf, err = json.MarshalIndent(ret, "", "  ")
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	fmt.Println(string(buf))
+	fmt.Println(ret.String())
 }

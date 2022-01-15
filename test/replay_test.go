@@ -15,7 +15,7 @@ func TestTh6(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH6 Lunatic ReimuA\nHIMAJIN@ 2022/01/02\n分数：1亿6093万2500\n处理落率：0.42%", ret.String())
+	assert.Equal(t, "TH6 Lunatic ReimuA\n机签：HIMAJIN@\n分数：1.61亿\n处理落率：0.42%", ret.String())
 }
 
 func TestTh8(t *testing.T) {
@@ -28,7 +28,7 @@ func TestTh8(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH8 Lunatic Stage 6-Kaguya 妖夢＆幽々子\nDavid Lu 2021/01/14 02:58:23\n10 Miss 35 Bomb\n分数：13亿0492万4700\n处理落率：0.00%", ret.String())
+	assert.Equal(t, "TH8 Lunatic Stage 6-Kaguya 妖夢＆幽々子\n机签：David Lu\n10 Miss 35 Bomb\n分数：13.05亿\n处理落率：0.00%", ret.String())
 }
 
 const userLine = "\x00\x00\x00\x00\x93\x8c\x95\xfb\x93\xf8\x97\xb4\x93\xb4\x20\x83\x8a\x83\x76\x83\x8c\x83\x43\x83\x74\x83\x40\x83\x43\x83\x8b\x8f\xee\x95\xf1\r\n"
@@ -39,5 +39,5 @@ func TestTh18(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH18 Lunatic All Clear Sanae\nDavid Lu 2021/08/14 00:22\n分数：10亿6260万6440\n处理落率：0.10%", ret.String())
+	assert.Equal(t, "TH18 Lunatic All Clear Sanae\n机签：David Lu\n分数：10.63亿\n处理落率：0.10%", ret.String())
 }

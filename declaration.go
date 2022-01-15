@@ -28,7 +28,7 @@ func (o *OldRepInfo) Game() string {
 }
 
 func (o *OldRepInfo) String() string {
-	return fmt.Sprintf("TH%s %s %s\n%s %s\n分数：%s\n处理落率：%.2f%%", o.game, o.Rank, o.Char, strings.TrimSpace(o.Player), o.Date, formatScore(o.Score), o.Drop)
+	return fmt.Sprintf("TH%s %s %s\n机签：%s\n分数：%s\n处理落率：%.2f%%", o.game, o.Rank, o.Char, strings.TrimSpace(o.Player), formatScore(o.Score), o.Drop)
 }
 
 type TH8RepInfo struct {
@@ -50,7 +50,7 @@ func (o *TH8RepInfo) String() string {
 	} else {
 		missBomb += strconv.Itoa(o.Bomb) + " Bomb"
 	}
-	return fmt.Sprintf("TH%s %s %s %s\n%s %s\n%s\n分数：%s\n处理落率：%.2f%%", o.game, o.Rank, o.Stage, o.Char, strings.TrimSpace(o.Player), o.Date, missBomb, formatScore(o.Score), o.Drop)
+	return fmt.Sprintf("TH%s %s %s %s\n机签：%s\n%s\n分数：%s\n处理落率：%.2f%%", o.game, o.Rank, o.Stage, o.Char, strings.TrimSpace(o.Player), missBomb, formatScore(o.Score), o.Drop)
 }
 
 type NewRepInfo struct {
@@ -59,27 +59,14 @@ type NewRepInfo struct {
 }
 
 func (o *NewRepInfo) String() string {
-	return fmt.Sprintf("TH%s %s %s %s\n%s %s\n分数：%s\n处理落率：%.2f%%", o.game, o.Rank, o.Stage, o.Char, strings.TrimSpace(o.Player), o.Date, formatScore(o.Score), o.Drop)
+	return fmt.Sprintf("TH%s %s %s %s\n机签：%s\n分数：%s\n处理落率：%.2f%%", o.game, o.Rank, o.Stage, o.Char, strings.TrimSpace(o.Player), formatScore(o.Score), o.Drop)
 }
 
 func formatScore(score int64) string {
-	var s string
 	if score >= 100000000 {
-		s += strconv.FormatInt(score/100000000, 10) + "亿"
-		score %= 100000000
+		return fmt.Sprintf("%.2f亿", float64(score)/100000000)
+	} else if score >= 10000 {
+		return fmt.Sprintf("%.1f万", float64(score)/10000)
 	}
-	if score >= 10000 {
-		if len(s) > 0 {
-			s += fmt.Sprintf("%04d万", score/10000)
-		} else {
-			s += strconv.FormatInt(score/10000, 10) + "万"
-		}
-		score %= 10000
-	}
-	if len(s) > 0 {
-		s += fmt.Sprintf("%04d", score)
-	} else {
-		s += strconv.FormatInt(score, 10)
-	}
-	return s
+	return strconv.FormatInt(score, 10)
 }

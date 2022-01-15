@@ -127,7 +127,7 @@ func DecodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	_, err = fmt.Sscanf(strings.ReplaceAll(getValue("人間率\t\t", string(line)), "％", "%"), "%f%%", &ret.Drop)
+	_, err = fmt.Sscanf(strings.ReplaceAll(getValue("人間率\t\t", string(line)), "％", "%"), "%f%%", &ret.Human)
 	if err != nil {
 		return nil, err
 	}

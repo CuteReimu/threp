@@ -20,16 +20,24 @@ func DecodeNewReplay(fin io.Reader) (*NewRepInfo, error) {
 		return nil, errors.New("not a replay")
 	}
 
-	game := string(buf[1:3])
-	if strings.Compare(game, "10") < 0 || strings.Compare(game, "18") > 0 {
-		return nil, errors.New("not a replay")
-	}
-	if game == "18" {
-		if buf[3] != 'r' && buf[3] != 't' {
+	var game string
+	switch string(buf) {
+	case "t95r":
+		game = "95"
+	case "t125":
+		game = "125"
+	case "128r":
+		game = "128"
+	case "t156":
+		game = "165"
+	case "al1r":
+		game = "ALCO"
+	default:
+		game = string(buf[1:3])
+		if strings.Compare(game, "10") < 0 || strings.Compare(game, "18") > 0 {
 			return nil, errors.New("not a replay")
 		}
-	} else {
-		if buf[3] != 'r' {
+		if buf[3] != 'r' && (game != "18" || buf[3] != 't') {
 			return nil, errors.New("not a replay")
 		}
 	}

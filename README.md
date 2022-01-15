@@ -33,30 +33,32 @@ func main() {
 }
 ```
 
+详细用法可见`example/main.go`
+
 ## 函数说明
 
 - `DecodeTh6Replay`、`DecodeTh7Replay`、`DecodeTh8Replay`分别用来解析th6、th7、th8三作的rpy文件。
-- `DecodeNewReplay`用来解析th10-th18各整数作的rpy文件
+- `DecodeNewReplay`用来解析th95及以后各作的rpy文件
 
 ## 进度
 
 - [x] 东方红魔乡
 - [x] 东方妖妖梦
 - [x] 东方永夜抄
-- [ ] 东方文花帖
+- [x] 东方文花帖
 - [x] 东方风神录
 - [x] 东方地灵殿
 - [x] 东方星莲船
-- [ ] 东方文花帖DS
-- [ ] 妖精大战争
+- [x] 东方文花帖DS
+- [x] 妖精大战争
 - [x] 东方神灵庙
 - [x] 东方辉针城
 - [x] 东方绀珠传
 - [x] 东方天空璋
-- [ ] 秘封噩梦日记
+- [x] 秘封噩梦日记
 - [x] 东方鬼形兽
 - [x] 东方虹龙洞
-- [ ] 黄昏酒场
+- [x] 黄昏酒场
 
 ## 许可协议
 

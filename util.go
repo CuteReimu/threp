@@ -18,7 +18,7 @@ func seek(reader io.Reader, offset int64) error {
 		return errors.Errorf("cannot seek negative offset: %d", offset)
 	}
 	buf := make([]byte, offset)
-	n, err := reader.Read(buf)
+	n, err := io.ReadFull(reader, buf)
 	if err != nil {
 		return err
 	}

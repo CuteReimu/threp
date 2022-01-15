@@ -30,12 +30,15 @@ func DecodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 func decodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 	// read data size
 	buf := make([]byte, 8)
-	_, err := fin.Read(buf)
+	n, err := fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}
+	if n != 8 {
+		return nil, errors.New("decompress failed")
+	}
 	buf = buf[:4]
-	n, err := fin.Read(buf)
+	n, err = fin.Read(buf)
 	if err != nil {
 		return nil, err
 	}

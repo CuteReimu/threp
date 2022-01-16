@@ -70,7 +70,7 @@ func decodeNewReplay(fin io.Reader, game string) (*NewRepInfo, error) {
 	}
 
 	// move to fileinfo block.
-	err = seek(fin, int64(binary.LittleEndian.Uint32(buf)-4))
+	err = seek(fin, int64(binary.LittleEndian.Uint32(buf)-4-8-4))
 	if err != nil {
 		return nil, err
 	}

@@ -1,6 +1,7 @@
 package threp
 
 import (
+	"bufio"
 	"github.com/pkg/errors"
 	"io"
 	"strings"
@@ -51,4 +52,23 @@ func safeIndex(arr []string, index byte) string {
 		return "Unknown"
 	}
 	return arr[index]
+}
+
+func linesToMap(fin io.Reader, separator string) (map[string]string, error) {
+	reader := bufio.NewReader(fin)
+	ret := make(map[string]string)
+	for {
+		line, _, err := reader.ReadLine()
+		if err != nil && err != io.EOF {
+			return nil, err
+		}
+		arr := strings.SplitN(string(line), separator, 2)
+		if len(arr) == 2 {
+			ret[trim(arr[0])] = trim(arr[1])
+		}
+		if err == io.EOF {
+			break
+		}
+	}
+	return ret, nil
 }

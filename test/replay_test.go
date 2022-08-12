@@ -3,7 +3,6 @@ package test
 import (
 	"bytes"
 	"github.com/CuteReimu/threp"
-	"github.com/stretchr/testify/assert"
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
@@ -16,7 +15,12 @@ func TestTh6(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH6 Lunatic ReimuA\n机签：HIMAJIN@\n分数：1.61亿\n处理落率：0.42%", ret.String())
+	expected := "TH6 Lunatic ReimuA\n机签：HIMAJIN@\n分数：1.61亿\n处理落率：0.42%"
+	actual := ret.String()
+	if expected != actual {
+		t.Error(expected)
+		t.Error(actual)
+	}
 }
 
 func TestTh8(t *testing.T) {
@@ -28,7 +32,12 @@ func TestTh8(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH8 Lunatic Stage 6-Kaguya 妖夢＆幽々子\n机签：David Lu\n10 Miss 35 Bomb\n分数：13.05亿\n处理落率：0.00%", ret.String())
+	expected := "TH8 Lunatic Stage 6-Kaguya 妖夢＆幽々子\n机签：David Lu\n10 Miss 35 Bomb\n分数：13.05亿\n处理落率：0.00%"
+	actual := ret.String()
+	if expected != actual {
+		t.Error(expected)
+		t.Error(actual)
+	}
 }
 
 func TestTh8CN(t *testing.T) {
@@ -40,7 +49,12 @@ func TestTh8CN(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH8 Lunatic Stage 6-Kaguya 妖夢＆幽々子\n机签：David Lu\n10 Miss 35 Bomb\n分数：13.05亿\n处理落率：0.00%", ret.String())
+	expected := "TH8 Lunatic Stage 6-Kaguya 妖夢＆幽々子\n机签：David Lu\n10 Miss 35 Bomb\n分数：13.05亿\n处理落率：0.00%"
+	actual := ret.String()
+	if expected != actual {
+		t.Error(expected)
+		t.Error(actual)
+	}
 }
 
 const userLine = "USER\xb0\x00\x00\x00\x00\x00\x00\x00\x93\x8c\x95\xfb\x93\xf8\x97\xb4\x93\xb4\x20\x83\x8a\x83\x76\x83\x8c\x83\x43\x83\x74\x83\x40\x83\x43\x83\x8b\x8f\xee\x95\xf1\r\n"
@@ -51,5 +65,10 @@ func TestTh18(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, "TH18 Lunatic All Clear Sanae\n机签：David Lu\n分数：10.63亿\n处理落率：0.10%", ret.String())
+	expected := "TH18 Lunatic All Clear Sanae\n机签：David Lu\n分数：10.63亿\n处理落率：0.10%"
+	actual := ret.String()
+	if expected != actual {
+		t.Error(expected)
+		t.Error(actual)
+	}
 }

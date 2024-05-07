@@ -9,7 +9,6 @@ import (
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
 	"io"
-	"io/ioutil"
 	"strconv"
 	"strings"
 )
@@ -59,7 +58,7 @@ func decodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	buf, err = ioutil.ReadAll(fin)
+	buf, err = io.ReadAll(fin)
 	if err != nil {
 		return nil, err
 	}

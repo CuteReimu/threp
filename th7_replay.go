@@ -4,7 +4,6 @@ import (
 	"encoding/binary"
 	"github.com/pkg/errors"
 	"io"
-	"io/ioutil"
 	"math"
 )
 
@@ -24,7 +23,7 @@ func DecodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 }
 
 func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
-	dat, err := ioutil.ReadAll(fin)
+	dat, err := io.ReadAll(fin)
 	if err != nil {
 		return nil, err
 	}

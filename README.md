@@ -3,6 +3,7 @@
 ![](https://img.shields.io/github/languages/top/CuteReimu/threp "语言")
 [![](https://img.shields.io/github/actions/workflow/status/CuteReimu/threp/go.yml?branch=master)](https://github.com/CuteReimu/threp/actions/workflows/go.yml "代码分析")
 [![](https://img.shields.io/github/contributors/CuteReimu/threp)](https://github.com/CuteReimu/threp/graphs/contributors "贡献者")
+[![](https://img.shields.io/badge/License-LGPL--3.0-orange)](https://github.com/CuteReimu/threp/blob/master/LICENSE.LGPLv3 "许可协议")
 [![](https://img.shields.io/badge/License-BY--NC--SA%203.0-lightgrey)](https://github.com/CuteReimu/threp/blob/master/LICENSE "许可协议")
 
 解析东方Project的replay文件的Go语言版本
@@ -60,6 +61,3 @@ func main() {
 - [x] 东方虹龙洞
 - [x] 黄昏酒场
 
-## 许可协议
-
-按照score.royalflare.net提供的许可协议，本仓库也按照BY-NC-SA协议进行开源。

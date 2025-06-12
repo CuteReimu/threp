@@ -19,9 +19,9 @@ jobs:
           go-version: '1.17'
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@v7
         with:
-          args: --timeout 3m0s
+          version: latest
 
       - name: Build
         run: go build -v ./...

@@ -1,8 +1,8 @@
 module github.com/CuteReimu/threp
 
-go 1.17
+go 1.23.0
 
 require (
 	github.com/pkg/errors v0.9.1
-	golang.org/x/text v0.26.0
+	golang.org/x/text v0.28.0
 )

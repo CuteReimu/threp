@@ -2,9 +2,10 @@ package threp
 
 import (
 	"encoding/binary"
-	"github.com/pkg/errors"
 	"io"
 	"math"
+
+	"github.com/pkg/errors"
 )
 
 func DecodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
@@ -34,7 +35,7 @@ func decodeTh6Replay(fin io.Reader) (*OldRepInfo, error) {
 	// Decryption
 	dat2 := make([]byte, 0, len(dat))
 	mask := dat[0x0e]
-	for i := 0; i < 0x0f; i++ {
+	for i := range 0x0f {
 		dat2 = append(dat2, dat[i])
 	}
 	for i := 0x0f; i < len(dat); i++ {

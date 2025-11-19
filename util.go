@@ -2,9 +2,10 @@ package threp
 
 import (
 	"bufio"
-	"github.com/pkg/errors"
 	"io"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 func seek(reader io.Reader, offset int64) error {

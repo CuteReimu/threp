@@ -1,0 +1,30 @@
+version: "2"
+linters:
+  default: all
+  disable:
+    - wsl
+    - wsl_v5
+    - cyclop
+    - depguard
+    - embeddedstructfieldcheck
+    - exhaustruct
+    - forbidigo
+    - gocognit
+    - gosmopolitan
+    - mnd
+    - nlreturn
+    - paralleltest
+    - revive
+    - wrapcheck
+    - varnamelen
+    - lll
+    - nestif
+    - ireturn
+    - dupl
+    - gocyclo
+    - funlen
+  settings:
+    gosec:
+      excludes:
+        - G304
+        - G602

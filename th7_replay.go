@@ -2,9 +2,10 @@ package threp
 
 import (
 	"encoding/binary"
-	"github.com/pkg/errors"
 	"io"
 	"math"
+
+	"github.com/pkg/errors"
 )
 
 func DecodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
@@ -30,7 +31,7 @@ func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 	dat = append([]byte("T7RP"), dat...)
 	dat2 := make([]byte, len(dat))
 	mask := dat[0x0d]
-	for i := 0; i < 0x10; i++ {
+	for i := range 0x10 {
 		dat2[i] = dat[i]
 	}
 	for i := 0x10; i < len(dat); i++ {
@@ -48,14 +49,14 @@ func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 	v11 := uint32(0x80)
 	v20 := uint32(0)
 
-	for i := 0; i < 4; i++ {
+	for i := range 4 {
 		v20 = v20*0x100 + uint32(dat[0x17-i])
 	}
 	v4b := make([]byte, 0x16c80)
 
 	repLength := binary.LittleEndian.Uint32(dat[0x18:])
 	dat2 = make([]byte, repLength+0x54)
-	for i := 0; i < 0x54; i++ {
+	for i := range 0x54 {
 		dat2[i] = dat[i]
 	}
 	index := uint32(0x54)
@@ -78,7 +79,7 @@ func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 				}
 				if flFirstRun == 1 {
 					v1c = v04 & v11
-					v11 = v11 >> 1
+					v11 >>= 1
 					if v11 == 0 {
 						v11 = 0x80
 					}
@@ -91,10 +92,10 @@ func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 					flFirstRun = 0
 				} else {
 					if (v11 & v04) != 0 {
-						v1c = v1c | v30
+						v1c |= v30
 					}
-					v30 = v30 >> 1
-					v11 = v11 >> 1
+					v30 >>= 1
+					v11 >>= 1
 					if v11 == 0 {
 						v11 = 0x80
 					}
@@ -124,10 +125,10 @@ func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 				v28 += v04
 			}
 			if (v11 & v04) != 0 {
-				v1c = v1c | v30
+				v1c |= v30
 			}
-			v30 = v30 >> 1
-			v11 = v11 >> 1
+			v30 >>= 1
+			v11 >>= 1
 			if v11 == 0 {
 				v11 = 0x80
 			}
@@ -149,10 +150,10 @@ func decodeTh7Replay(fin io.Reader) (*OldRepInfo, error) {
 				v28 += v04
 			}
 			if (v11 & v04) != 0 {
-				v1c = v1c | v30
+				v1c |= v30
 			}
-			v30 = v30 >> 1
-			v11 = v11 >> 1
+			v30 >>= 1
+			v11 >>= 1
 			if v11 == 0 {
 				v11 = 0x80
 			}

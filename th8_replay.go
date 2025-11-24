@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"io"
+	"strconv"
+	"strings"
+
 	"github.com/pkg/errors"
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
-	"io"
-	"strconv"
-	"strings"
 )
 
 func DecodeTh8Replay(fin io.Reader) (*TH8RepInfo, error) {

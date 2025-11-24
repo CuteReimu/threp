@@ -1,9 +1,10 @@
 package threp
 
 import (
-	"github.com/pkg/errors"
 	"io"
 	"log"
+
+	"github.com/pkg/errors"
 )
 
 func DecodeReplay(fin io.Reader) (RepInfo, error) {

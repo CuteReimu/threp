@@ -3,10 +3,11 @@ package threp
 import (
 	"bufio"
 	"encoding/binary"
-	"github.com/pkg/errors"
 	"io"
 	"strconv"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 func DecodeNewReplay(fin io.Reader) (*NewRepInfo, error) {

@@ -2,8 +2,9 @@ package test_test
 
 import (
 	"embed"
-	"github.com/CuteReimu/threp"
 	"testing"
+
+	"github.com/CuteReimu/threp"
 )
 
 //go:embed *.rpy

@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/CuteReimu/threp"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/CuteReimu/threp"
 )
 
 func main() {
